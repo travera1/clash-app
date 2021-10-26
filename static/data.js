@@ -374,7 +374,7 @@
         elixirCost: 1,
     },
     {
-        name: "ice-wizard",
+        name: "ice wizard",
         type: "legendary",
         description: "This chill caster throws ice shards that slow down enemies' movement and attack speed. Despite being freezing cold, he has a handlebar mustache that's too hot for TV.",
         image: "./images/ice-wizard.png",
