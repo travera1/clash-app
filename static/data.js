@@ -441,82 +441,82 @@
 let arenas = [
     {
         name: "Training Camp",
-        image: "./images-arena/arena0.png",
+        image: "./images-arena/arena0-min.png",
         required: null,
     },
     {
         name: "Goblin Stadium",
-        image: "./images-arena/arena1.png",
+        image: "./images-arena/arena1-min.png",
         required: 0,
     },
     {
         name: "Bone Pit",
-        image: "./images-arena/arena2.png",
+        image: "./images-arena/arena2-min.png",
         required: 300,
     },
     {
         name: "Barbarian Bowl",
-        image: "./images-arena/arena3.png",
+        image: "./images-arena/arena3-min.png",
         required: 600,
     },
     {
         name: "P.E.K.K.A's Playhouse",
-        image: "./images-arena/arena4.png",
+        image: "./images-arena/arena4-min.png",
         required: 1000,
     },
     {
         name: "Spell Valley",
-        image: "./images-arena/arena5.png",
+        image: "./images-arena/arena5-min.png",
         required: 1300,
     },
     {
         name: "Builder's Workshop",
-        image: "./images-arena/arena6.png",
+        image: "./images-arena/arena6-min.png",
         required: 1600,
     },
     {
         name: "Royal Arena",
-        image: "./images-arena/arena7.png",
+        image: "./images-arena/arena7-min.png",
         required: 2000,
     },
     {
         name: "Frozen Peak",
-        image: "./images-arena/arena8.png",
+        image: "./images-arena/arena8-min.png",
         required: 2300,
     },
     {
         name: "Jungle Arena",
-        image: "./images-arena/arena9.png",
+        image: "./images-arena/arena9-min.png",
         required: 2600,
     },
     {
         name: "Hog Mountain",
-        image: "./images-arena/arena10.png",
+        image: "./images-arena/arena10-min.png",
         required: 3000,
     },
     {
         name: "Electro Valley",
-        image: "./images-arena/arena11.png",
+        image: "./images-arena/arena11-min.png",
         required: 3400,
     },
     {
         name: "Spooky Town",
-        image: "./images-arena/arena12.png",
+        image: "./images-arena/arena12-min.png",
         required: 3800,
     },
     {
         name: "Rascal's Hideout",
-        image: "./images-arena/arena13.png",
+        image: "./images-arena/arena13-min.png",
         required: 4200,
     },
     {
         name: "Serenity Peak",
-        image: "./images-arena/arena14.png",
+        image: "./images-arena/arena14-min.png",
         required: 4600,
     },
     {
         name: "Legendary Arena",
-        image: "./images-arena/legendary.png",
+        image: "./images-arena/legendary-min.png",
         required: 5000,
     },
 ]
