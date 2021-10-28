@@ -11,7 +11,9 @@ const session = {
             this.user = response.user
             router.push(this.toRoute)
         } catch (error) {
-            this.messages.push({text: error.msg, type: 'warning'})
+            this.messages.push({text: error.msg, type: 'danger'})
         }
     }
 }
+
+export default session

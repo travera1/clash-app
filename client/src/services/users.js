@@ -1,9 +1,6 @@
-import { getGlobalThis } from "@vue/shared"
-import { get } from "mongoose"
-
 const list = [
     {
-        firstname: 'Aaron', 
+        firstName: 'Aaron', 
         lastName: 'Traver',
         username: 'travera1',
         password:'123',
@@ -28,8 +25,8 @@ export function Update(user_id, user){
     if(user.lastName){
         oldObj.lastName = user.lastName;
     }
-    if(user.handle){
-        oldObj.handle = user.handle;
+    if(user.username){
+        oldObj.username = user.username;
     }
     if(user.pic){
         oldObj.pic = user.pic;
