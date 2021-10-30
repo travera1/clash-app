@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const morgan = require('morgan')
 const path = require('path')
-const userRoutes = require('./routes/api/users')
+//const userRoutes = require('./routes/api/users')
 
 //middleware and static files
 app.use(cors())
@@ -22,7 +22,7 @@ mongoose
     .then(() => console.log('MongoDB database connected ...'))
     .catch((err) => console.log(err))
 
-app.use('/api/users', userRoutes)
+//app.use('/api/users', userRoutes)
 
 //app.use(express.static("static"))
 
