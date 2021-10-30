@@ -2,6 +2,7 @@
   <div class="is-dark has-background">
     
     <Navbar/>
+    <br><br>
     <Messages/>
     <img class="hero-background" src="/images/bg-2.jpg" alt="background"> 
     

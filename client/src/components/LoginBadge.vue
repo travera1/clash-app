@@ -1,6 +1,6 @@
 <template>
   <div class="buttons" v-if="!Session.user">
-    <a class="button is-primary"><strong>Sign up</strong></a>
+    <a class="button is-primary" @click="signUp"><strong>Sign up</strong></a>
     <a class="button is-light" @click="login">Log in</a>
   </div>
   <div v-else>
@@ -19,6 +19,9 @@ export default {
     methods: {
         login() {
             this.$router.push('/login')
+        },
+        signUp(){
+            this.$router.push('/signup') 
         }
     },
     computed: {

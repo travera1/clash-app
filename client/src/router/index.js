@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Session from '../services/session'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import SignUp from '../views/SignUp'
+import DeckBuilder from '../views/DeckBuilder.vue'
 
 const routes = [
   {
@@ -14,9 +16,20 @@ const routes = [
     component: Home
   },
   {
+    path: '/deckbuilder',
+    name: 'DeckBuilder',
+    component: DeckBuilder,
+    meta: { requiresLogin: true }
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/signup',
+    name: 'SignUp',
+    component: SignUp
   }
 ]
 
