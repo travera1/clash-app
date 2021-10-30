@@ -3,7 +3,7 @@
     
     <Navbar/>
     <Messages/>
-    <img class="hero-background" src="./assets/images/images/bg-2.jpg" alt="background"> 
+    <img class="hero-background" src="/images/bg-2.jpg" alt="background"> 
     
     <router-view/>
   </div>

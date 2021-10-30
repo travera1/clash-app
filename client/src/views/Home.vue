@@ -9,64 +9,76 @@
         <div class="mx-5 column is-one-third">
           <div class="field has-addons columns is-gapless">
             <div class="column btn">
-              <span class="button is-fullwidth has-background-link-light has-text-danger" id="showCards">
+              <span class="button is-fullwidth has-background-link-light has-text-danger" id="showCards" @click="selectList('cards')">
                 Cards
               </span> 
             </div>
             <div class="column">
-              <span class="is-fullwidth button has-background-danger-light has-text-link" id="showArenas">
+              <span class="is-fullwidth button has-background-danger-light has-text-link" id="showArenas" @click="selectList('arenas')">
                 Arenas
               </span> 
             </div>
             <div class="column">
-              <span class="mx-4 is-fullwidth button has-background-primary-light has-text-link" id="randomCard">
+              <span class="mx-4 is-fullwidth button has-background-primary-light has-text-link" id="randomCard" @click="randomCard">
                 Random Card
               </span> 
             </div>
           </div>
-          <form class="field has-addons" id="search-cards">
+          <form class="field has-addons" v-on:submit.prevent id="search-cards">
             <div class="control is-expanded">
-              <input class="input" id="search" type="text" placeholder="Search cards...">
+              <input class="input" id="search" type="text" placeholder="Search cards..." v-model="filterTerm" @keyup="preventDefault(e)">
             </div>
             <div class="control">
-              <span class="button has-background-link-light has-text-danger" id="sort-alpha">
+              <span class="button has-background-link-light has-text-danger" id="sort-alpha" @click="sortAlpha">
                 <i class="fas fa-lg fa-sort-alpha-down"></i>
               </span> 
             </div>
             <div class="control">
-              <span class="button has-background-danger-light has-text-link" id="sort-level">
+              <span class="button has-background-danger-light has-text-link" id="sort-level" @click="sortRarity">
                 <i class="fas fa-sort-amount-down"></i>
               </span> 
             </div>
             <div class="control">
-              <span class="button has-background-warning-light" id="sort-elixir">
+              <span class="button has-background-warning-light" id="sort-elixir" @click="sortElixir">
                 <i class="fas fa-tint"></i>
               </span> 
             </div>
           </form>
           
           <div class="notification column is-three-fifths" id="our-list">
-            <h1 class="title has-text-info has-text-weight-bold" id="list-title"></h1>
+            <h1 class="title has-text-info has-text-weight-bold" id="list-title">{{ displayType }}</h1>
             <div id="list-target">
-              <div id="list-col-1">
-
-              </div>
+              <ul>
+                <div v-for="item in selectedList" :key="item.name">
+                  <div v-if="compareTerm(item.name)" >
+                    <div v-if="sortedType =='rarity' && displayType=='Cards'">
+                      <li v-if="item.type=='common'" :style="{ color: '#638AC8' }" @click="displayItem(item)">{{ item.name }}</li>
+                      <li v-else-if="item.type=='rare'" :style="{ color: '#FF7800'}" @click="displayItem(item)">{{ item.name }}</li>
+                      <li v-else-if="item.type=='epic'" :style="{ color: '#AC1FF8' }" @click="displayItem(item)">{{ item.name }}</li>
+                      <li v-else :style="{ color: '#FF01EF' }" @click="displayItem(item)">{{ item.name }}</li>
+                    </div>
+                    <li v-else  :style="{ color: 'red' }" @click="displayItem(item)">{{ item.name }}</li>
+                  </div>
+                </div>
+              </ul>
               
             </div>
           </div>
         </div>
-        <div class="column card-info ">
+        <div v-if="isDisplaying" class="column card-info ">
           <div class="">
             <p class="is-italic has-text-weight-bold card-info" id="description"></p>
             <div class="is-italic has-text-weight-bold arena-info" id="name-and-requirement"></div>
           </div><br><br><br><br><br>
-          <figure class="image " id="our-image">
-            
+          <p class="title has-text-white">{{ name }}</p>
+          <p> {{ description }}</p>
+          <figure v-if="isDisplaying" class="image" id="our-image">
+            <img v-if="displayType=='Cards'" class="card-image" :src="'/images/'+image" alt="card">
+             <img v-else class="card-image" :src="'/images-arena/'+image" alt="arena">
           </figure>
           <p id="card-name"></p>
         </div>
       </div>
-        
     </div>
   </div>
     
@@ -74,7 +86,8 @@
 
 <script>
 // @ is an alias to /src
-
+import { cards } from '../services/cards'
+import { arenas } from '../services/arenas'
 
 export default {
   name: 'Home',
@@ -83,25 +96,128 @@ export default {
   },
   data() {
     return {
+        displayType: "Cards",
+        cards,
+        arenas,
+        selectedList: cards,
+        name: "",
+        description: "",
+        image: "",
+        filterTerm: "",
+        sortedType: "",
+        isDisplaying: false
 
     }
   },
-  mounted() {
-    let ascript = document.createElement('script')
-      ascript.setAttribute('src', '../app.js')
-      document.head.appendChild(ascript)
-
-  },
   methods: {
+    selectList(type){
+      if(type == 'cards'){
+        this.displayType = "Cards"
+        this.selectedList = cards
+        this.sortedType = "alpha"
+      } else {
+        this.displayType = "Arenas"
+        this.selectedList = arenas
+        this.sortedType=""
+      }
+      this.isDisplaying = false
+     
+    },
+    compareTerm(name){
+      return name.toLowerCase().includes(this.filterTerm.toLowerCase())
+    },
+    displayItem(item){
+      //when card clicked, display name, desc, img 
+      this.isDisplaying = true
+      if(this.displayType =='Cards'){
+         this.name = item.name
+         this.description = item.description
+         this.image = item.image
+      } else {
+        this.name = item.name
+        this.description = item.name +' ' +item.required
+        this.image = item.image
+      }
+    },
+    sortAlpha(){
+      this.sortedType=""
+      let list = this.selectedList
 
+      this.selectedList=list.sort((a,b) =>{
+        if(a.name < b.name){
+          return -1
+        }
+        if(a.name >b.name){
+          return 1
+        }
+        return 0
+      })
+    },
+    sortRarity(){
+      if(this.displayType == 'Cards'){
+        this.sortedType='rarity'
+        let commons =[]
+        let rares =[]
+        let epics =[]
+        let legendaries =[]
+        cards.forEach(card =>{
+            if(card.type=="common") {
+              commons.push(card)
+            } else if (card.type=="rare") {
+              rares.push(card)
+            }
+            else if (card.type=="epic") {
+              epics.push(card)
+            } else {
+              legendaries.push(card)
+            }  
+        })
+        epics = epics.concat(legendaries)
+        rares = rares.concat(epics)
+        commons = commons.concat(rares)
+
+        this.selectedList = commons
+      }
+      
+    },
+    sortElixir(){
+      this.sortedType=""
+      if(this.displayType == 'Cards'){
+        this.selectedList=cards.sort((a,b) => {
+          if(a.elixirCost < b.elixirCost) {
+            return -1
+          }
+          if(a.elixirCost < b.elixirCost){
+            return 1
+          }
+          return 0
+        })
+      }
+    },
+    randomCard(){
+      this.isDisplaying = true 
+      this.displayType = "Cards"
+      let card = cards[Math.floor(Math.random()*cards.length)]
+      this.name = card.name
+      this.description = card.description
+      this.image = card.image
+    },
+    preventDefault(e){
+      if(e){
+        e.preventDefault()
+      }
+    }
+  },
+  mounted(){
+    this.selectList('cards')
   }
 }
 </script>
 
 <style lang="css">
-  div{
+  *{
     font-family: Tahoma;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
   }
   h1, h2{
       font-weight: normal;
@@ -115,15 +231,15 @@ export default {
       /*text-shadow: -1px -1px 0 rgb(201, 25, 236), 1px -1px 0 rgb(233, 15, 215), -1px 1px 0 rgb(173, 19, 194), 1px 1px 0 rgb(187, 18, 209);*/
   }
   .card-image{
-      width: 302px;
-      height: 363px;
+      width: 80%;
       
   }
   .card-info{
-      /*color: rgb(77, 15, 15); */
-      color: rgb(76, 0, 253);  
+      /*color: rgb(77, 15, 15); */ 
       font-size: larger;
-      top:10%;
+    
+      color: white;
+      top:1%;
       width: 30%;
       position: fixed;
       left: 50%;
@@ -169,4 +285,5 @@ export default {
   #sort-elixir{
       color:rgb(172, 32, 228)
   }
+  
 </style>
