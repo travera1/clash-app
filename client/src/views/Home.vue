@@ -72,16 +72,18 @@
         </div>
         <div v-if="isDisplaying" class="column card-info ">
           <br><br><br><br><br>
-          <p style="float: left;" class="title has-text-white">{{ name }}</p>
-          <span style="float: right;" v-if="this.Session.user">
-            <span class="has-text-warning" v-if="this.Session.user.favorites.includes(this.name)" @click="removeFav">
-              <i class="fas fa-2x fa-star" ></i>
+          <div>
+            <p style="float: left;" class="title has-text-white">{{ name }}</p>
+            <span style="float: right;" v-if="this.Session.user">
+              <span class="has-text-warning" v-if="this.Session.user.favorites.includes(this.name)" @click="removeFav">
+                <i class="fas fa-2x fa-star" ></i>
+              </span>
+              <span class="" v-else @click="addFav">
+                <i class="fas fa-lg fa-star" ></i>
+              </span>
             </span>
-            <span class="" v-else @click="addFav">
-              <i class="fas fa-lg fa-star" ></i>
-            </span>
-          </span>
-
+          </div>
+         
           <p class="clearfix"> {{ description }}</p>
           <figure v-if="isDisplaying" class="image" id="our-image">
             <img v-if="displayType=='Cards'" class="card-image" :src="'/images/'+image" alt="card">
