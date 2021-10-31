@@ -1,11 +1,18 @@
 <template>
   <div class="hero-head">
     <div class="container">
-      <div class="header">
-        <h1 class="mt-3 ml-3 title has-text-white">Clash Royale Deck Builder</h1>
-        <h3 class="ml-5 subtitle has-text-white">Select Cards and Add to your decks.</h3>
+      <div class="header columns is-vcentered">
+          <div class="column">
+            <h1 class="mt-3 ml-3 title has-text-white">Clash Royale Deck Builder</h1>
+            <h3 class="ml-5 subtitle has-text-white">Select Cards and Add to your decks.</h3>
+          </div>
+          <div class="column"><span class="button">Create New</span></div>
+        
       </div><br>
-      <div class="columns">
+      <div>
+          <Deck/>
+          <br>
+          
       </div>
     </div>
   </div>
@@ -13,12 +20,30 @@
 
 <script>
 import { cards } from '../services/cards'
+import Deck from '../components/Deck.vue'
+import axios from 'axios'
+import Session from '../services/session'
 export default {
+    components: {
+        Deck
+    },
     data() {
         return {
             cards,
+            Session,
+            decks: [],
 
         }
+    },
+    async mounted(){
+        const response = await axios.get("api/decks/")
+        let allDecks = response.data
+        let user_id = this.Session.user._id
+        allDecks.forEach(deck => {
+            if(deck.user_id === user_id){
+                this.decks.push(deck)
+            }
+        })
     }
 }
 </script>
