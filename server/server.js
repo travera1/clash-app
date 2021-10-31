@@ -8,6 +8,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const path = require('path')
 const userRoutes = require('./routes/api/users')
+const deckRoutes = require('./routes/api/decks')
 
 //middleware and static files
 app.use(cors())
@@ -24,6 +25,7 @@ mongoose
     .catch((err) => console.log(err))
 
 app.use('/api/users', userRoutes)
+app.use('/api/decks', deckRoutes)
 
 //app.use(express.static("static"))
 
