@@ -4,7 +4,8 @@
     <a class="button is-light" @click="login">Log in</a>
   </div>
   <div v-else>
-     Hello {{ name }}
+    <span class=""> Hello {{ name }}</span> 
+    <a class="button ml-3 is-warning is-small" @click="logout">Log out</a>
   </div>
 </template>
 
@@ -22,6 +23,9 @@ export default {
         },
         signUp(){
             this.$router.push('/signup') 
+        },
+        logout(){
+            this.Session.user = null
         }
     },
     computed: {

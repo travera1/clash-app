@@ -14,7 +14,7 @@
         <router-link class="navbar-item is-tab" to="/deckbuilder" active-class="is-active" exact>&nbsp;&nbsp;Deck Builder</router-link>
       </div>
       <div class="navbar-end">
-        <div class="navbar-item">
+        <div class="navbar-item is-tab">
           <LoginBadge/>
         </div>
       </div>
