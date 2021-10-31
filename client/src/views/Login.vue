@@ -31,6 +31,7 @@
 
 <script>
 import Session from "../services/session"
+//import axios from "axios"
 export default {
     data() {
         return {

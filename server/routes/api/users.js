@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     } catch (error) {
         res.status(500).json( { message: error.message })
     }
-})
+}) 
 
 router.post('/', async (req, res) => {
     const newUser = new User(req.body)
