@@ -26,7 +26,7 @@
           </div>
           <form class="field has-addons" v-on:submit.prevent id="search-cards">
             <div class="control is-expanded">
-              <input class="input" id="search" type="text" placeholder="Search cards..." v-model="filterTerm" @keyup="preventDefault(e)">
+              <input class="input" id="search" type="text" :placeholder="'Search '+displayType+'...'" v-model="filterTerm" @keyup="preventDefault(e)">
             </div>
             <div class="control">
               <span class="button has-background-link-light has-text-danger" id="sort-alpha" @click="sortAlpha">
@@ -41,6 +41,11 @@
             <div class="control">
               <span class="button has-background-warning-light" id="sort-elixir" @click="sortElixir">
                 <i class="fas fa-tint"></i>
+              </span> 
+            </div>
+            <div v-if="this.Session.user" class="control">
+              <span class="button has-background-grey-light has-text-warning" id="sort-fav" @click="sortFav">
+                <i class="fas fa-star"></i>
               </span> 
             </div>
           </form>
@@ -66,12 +71,18 @@
           </div>
         </div>
         <div v-if="isDisplaying" class="column card-info ">
-          <div class="">
-            <p class="is-italic has-text-weight-bold card-info" id="description"></p>
-            <div class="is-italic has-text-weight-bold arena-info" id="name-and-requirement"></div>
-          </div><br><br><br><br><br>
-          <p class="title has-text-white">{{ name }}</p>
-          <p> {{ description }}</p>
+          <br><br><br><br><br>
+          <p style="float: left;" class="title has-text-white">{{ name }}</p>
+          <span style="float: right;" v-if="this.Session.user">
+            <span class="has-text-warning" v-if="this.Session.user.favorites.includes(this.name)" @click="removeFav">
+              <i class="fas fa-2x fa-star" ></i>
+            </span>
+            <span class="" v-else @click="addFav">
+              <i class="fas fa-lg fa-star" ></i>
+            </span>
+          </span>
+
+          <p class="clearfix"> {{ description }}</p>
           <figure v-if="isDisplaying" class="image" id="our-image">
             <img v-if="displayType=='Cards'" class="card-image" :src="'/images/'+image" alt="card">
              <img v-else class="card-image" :src="'/images-arena/'+image" alt="arena">
@@ -86,6 +97,8 @@
 
 <script>
 // @ is an alias to /src
+import Session from '../services/session'
+import axios from 'axios'
 import { cards } from '../services/cards'
 import { arenas } from '../services/arenas'
 
@@ -96,6 +109,7 @@ export default {
   },
   data() {
     return {
+        Session,
         displayType: "Cards",
         cards,
         arenas,
@@ -141,8 +155,12 @@ export default {
     },
     sortAlpha(){
       this.sortedType=""
-      let list = this.selectedList
-
+      let list 
+      if(this.displayType=="Cards"){
+         list = this.cards
+      } else {
+        list = this.arenas
+      }
       this.selectedList=list.sort((a,b) =>{
         if(a.name < b.name){
           return -1
@@ -194,6 +212,28 @@ export default {
         })
       }
     },
+    sortFav(){    
+      let favList = this.Session.user.favorites  
+      let newList =[]
+      if(this.displayType == 'Cards'){
+        favList.forEach(item => {
+          this.cards.forEach(card =>{
+            if(item === card.name)
+              newList.push(card)
+          })
+          
+        })
+      } else {
+        favList.forEach(item => {
+          this.arenas.forEach(arena =>{
+            if(item === arena.name)
+              newList.push(arena)
+          })
+          
+        })
+      }
+      this.selectedList = newList
+    },
     randomCard(){
       this.isDisplaying = true 
       this.displayType = "Cards"
@@ -206,6 +246,19 @@ export default {
       if(e){
         e.preventDefault()
       }
+    },
+    async addFav(){
+      this.Session.user.favorites.push(this.name)
+      await axios.put("api/users/"+this.Session.user._id, {
+        favorites: this.Session.user.favorites
+      })
+    },
+    async removeFav(){
+        let index = this.Session.user.favorites.indexOf(this.name)
+        this.Session.user.favorites.splice(index,1)
+        await axios.put("api/users/"+this.Session.user._id, {
+          favorites: this.Session.user.favorites
+      })
     }
   },
   mounted(){
@@ -285,5 +338,7 @@ export default {
   #sort-elixir{
       color:rgb(172, 32, 228)
   }
-  
+  .clearfix{
+    clear:both
+}
 </style>
