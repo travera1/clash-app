@@ -21,9 +21,6 @@ const UserSchema = new Schema({
         required: true, 
         
     },
-    favorites: {
-        type: {}
-    },
     date: {
         type: Date, 
         default: Date.now,

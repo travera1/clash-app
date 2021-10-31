@@ -3,36 +3,25 @@
       <div class="columns is-centered is-vcentered">
         <div class="column  has-text-white  is-three-quarters-mobile is-two-thirds-tablet is-half-desktop">
           <div class="notification has-background-dark">
-            <p class="title has-text-white has-text-centered">Sign up for free to start tracking.</p>
+            <p class="title has-text-white has-text-centered">Sign up for an account.</p>
           <form action="signupEmail.html">
             <div class="field">
-                <label class="label has-text-warning">What's your email?</label>
-                <div class="control has-icons-left">
-                  <input class="input" type="email" placeholder="Enter your email.">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-envelope"></i>
-                  </span>
+                <label class="label has-text-warning">What's your first name?</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="first name">
                 </div><br>
             </div>
             <div class="field">
-                <label class="label  has-text-warning">Confirm your email</label>
-                <div class="control has-icons-left">
-                  <input class="input" type="email" placeholder="Enter your email again.">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-envelope"></i>
-                  </span>
+                <label class="label  has-text-warning">What's youre last name?</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="last name">
+                 
                 </div><br>
             </div>
              <div class="field">
-                <label class="label  has-text-warning">What's your first name?</label>
+                <label class="label  has-text-warning">Enter a username.</label>
                 <div class="control">
-                  <input class="input" type="text" placeholder="Enter your first name.">
-                </div><br>
-            </div>
-             <div class="field">
-                <label class="label  has-text-warning">What's your last name?</label>
-                <div class="control">
-                  <input class="input" type="text" placeholder="Enter your last name.">
+                  <input class="input" type="text" placeholder="username">
                 </div><br>
             </div>
             <div class="field">
@@ -44,12 +33,7 @@
                   </span>
                 </p><br>
             </div>
-            <div class="field">
-                <label class="label has-text-warning">What's your date of birth?</label>
-                <p class="control">
-                  <input class="input" type="date">
-                </p><br>
-            </div>
+           
             <div class="control has-text-centered">
                 <button class="button is-primary is-rounded  has-text-weight-bold" type="submit" style="width: 40%;">Sign Up</button>
               </div><br><br>
