@@ -33,6 +33,7 @@
 import Session from "../services/session"
 import axios from "axios"
 import router from "../router"
+import bcrypt from "bcryptjs"
 export default {
     data() {
         return {
@@ -44,7 +45,7 @@ export default {
         }
     },
     methods: {
-        async login(){
+        /*async login(){
             if(this.username == null || this.password == null){
                 this.Session.messages.push({ text: 'field can\'t be empty.', type: 'danger'})
             }
@@ -71,7 +72,34 @@ export default {
             
             
             
+        }*/
+        
+        async login(){
+            
+            if(this.username == null || this.password == null){
+                this.Session.messages.push({ text: 'field can\'t be empty.', type: 'danger'})
+                console.log('empty')
+            }
+            else {
+            
+                const response = await axios.get("api/users/")
+                this.users = response.data
+                this.users.forEach(user => {
+                    if(this.username == user.username){
+                        if(bcrypt.compareSync(this.password, user.password)){
+                            this.Session.user = user
+                            this.found = true
+                            router.push(this.Session.toRoute)
+                        }
+                    }
+                })
+                if(!this.found){
+                    this.Session.messages.push({ text: 'No user found with those credentials', type: 'danger'})
+                }
+            }
+            //this.Session.Login(this.username, this.password)
         }
+        
     }
 }
 </script>
