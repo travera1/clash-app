@@ -1,19 +1,21 @@
 <template>
   <div>
-       <input v-if="isSelected()" type="text" class="input" v-model="editedName">
-        <p v-else class="column">
-            <span class="tag mr-3 is-primary">{{ 1 }}</span>{{ name }}
-        </p>
-        <div class="column is-narrow">
-            <span class="icon has-text-link pr-3" @click="isSelected() ? unselect() : select()">
-                <i v-if="isSelected(item)" class="fas fa-window-close"></i>
-                <i v-else class="fas fa-edit"></i>
-            </span>
-            <span class="icon has-text-danger" @click="isSelected() ? updateItem() : removeItem()">
-                <i v-if="isSelected()"  class="fas fa-check"></i>
-                <i v-else class="fas fa-trash"></i>
-            </span>
-        </div>
+      <div class="field has-addons">
+          <div class="control is-expanded">
+              <input v-if="selected" type="text" class="input  is-size-4 has-text-dark" v-model="editedName">
+               <p v-else class="column">
+                    <span class="is-size-4 has-text-white">{{ name }}</span>
+                </p>
+          </div>
+          <div class="control">
+              <span class="button is-size-4 is-warning" @click="select()"> {{ buttonName }}</span>
+          </div>
+      </div>
+      <div style="position: absolute; bottom: 20px; right: 60px;" class="">
+        <span class="is-light button has-text-danger del">
+            Delete 
+        </span> 
+     </div>
   </div>
 </template>
 
@@ -22,13 +24,26 @@ export default {
     data() {
         return {
             name: "",
-            eeditedName: "",
-            selected: {}
+            editedName: "",
+            buttonName: "Edit",
+            selected: false
+        }
+    },
+    methods: {
+        select(){
+            this.selected = !this.selected
+            if(this.buttonName == "Edit"){
+                this.buttonName = "Save"
+
+            } else {
+                this.buttonName ="Edit"
+                this.name = this.editedName
+            }
         }
     }
 }
 </script>
 
-<style>
-
+<style scoped>
+    
 </style>

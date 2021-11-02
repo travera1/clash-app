@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="column is-two-fifths">
-                   <Deckinfo/>
+                   <DeckInfo/>
                 </div>
             </div>
         </div>
@@ -69,15 +69,15 @@
 </template>
 
 <script>
-//import { cards } from '../services/cards'
-import DeckSlot from './DeckSlot.vue'
-//import DeckInfo from './DeckInfo.vue'
-import Session from '../services/session'
 import { cards } from '../services/cards'
+import DeckSlot from './DeckSlot.vue'
+import DeckInfo from './DeckInfo.vue'
+import Session from '../services/session'
+
     
 export default {
     components: {
-        DeckSlot, //DeckInfo
+        DeckSlot, DeckInfo
     },
     data() {
         return {
